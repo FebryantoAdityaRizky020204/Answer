@@ -34,7 +34,8 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Register Succesfuly'
+            'message' => 'Register Succesfuly',
+            'token' => $user->api_token
         ], 201);
 
 
