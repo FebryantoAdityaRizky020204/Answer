@@ -15,6 +15,10 @@ class CreateBusesTable extends Migration
     {
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
+            $table->string('plate_number');
+            $table->enum('brand', ['mercedes', 'fuso', 'scania']);
+            $table->foreignId('seat');
+            $table->foreignId('price_per_day');
             $table->timestamps();
         });
     }
