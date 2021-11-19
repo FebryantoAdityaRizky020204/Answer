@@ -37,7 +37,32 @@ class AuthController extends Controller
             'message' => 'Register Succesfuly',
             'token' => $user->api_token
         ], 201);
+    }
 
 
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 422);
+        }
+
+
+        if(Auth::attempt($request->all())){
+            $token = Auth::user()->api_token;
+            return response()->json([
+                'status' => true,
+                'message' => 'User Loged In Succesfuly',
+                'token' => $token
+            ],200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'invalid login'
+        ],401);
     }
 }
