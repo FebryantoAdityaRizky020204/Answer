@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Bus;
+use App\Models\Driver;
 use Illuminate\Support\Facades\Validator;
 
-class BusController extends Controller
+class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,25 +15,26 @@ class BusController extends Controller
      */
     public function index()
     {
-        $buses = Bus::get();
+        $drivers = Driver::get();
 
-        if(!empty($buses)){
+        if(!empty($driver)){
+
             return response()->json([
                 'status' => true,
-                'message' => 'Succes Get All Data Of Bus',
-                'data' => $buses
-            ],200);
+                'message' => 'All Data Drivers Table',
+                'data' => $drivers
+            ], 200);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Field Null'
-        ],401);
+            'message' => 'Field Driver Table null'
+        ],400);
     }
 
     /**
      * Store a newly created resource in storage.
-     * For admin to create new bus.
+     * For admin to create new driver.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -41,23 +42,24 @@ class BusController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'plate_number' => 'string|required',
-            'brand' => 'required|in:mercedes,fuso,scania',
-            'seat' => 'min:1|required|integer',
-            'price_per_day' => 'integer|min:100000|required'
+            'name' => 'string|required|min:3',
+            'age' => 'integer|min:18|required',
+            'id_number' => 'string|required|digits:16'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
 
-        if($bus = Bus::create($request->all())){
+        if($driver = Driver::create($request->all())){
             return response()->json([
                 'status' => true,
-                'message' => 'Create Bus Succes',
-                'data' => $bus
-            ], 200);
+                'message' => 'Create Driver Succes',
+                'data' => $driver
+            ],200);
         }
+
+
     }
 
     /**
@@ -68,25 +70,25 @@ class BusController extends Controller
      */
     public function show($id)
     {
-        $bus = Bus::where('id', $id)->first();
+        $driver = Driver::where('id', $id)->first();
 
-        if(!empty($bus)){
+        if(!empty($driver)){
+
             return response()->json([
                 'status' => true,
-                'message' => 'Succes Get Data Bus',
-                'data' => $bus
-            ],200);
+                'message' => 'Get Data Driver Succes',
+                'data' => $driver
+            ], 200);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Bus With Current id Not Found'
-        ],401);
+            'message' => 'Driver with current id not found'
+        ],400);
     }
 
     /**
      * Update the specified resource in storage.
-     * For admin to update existing bus by id.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -95,31 +97,30 @@ class BusController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'plate_number' => 'string',
-            'brand' => 'in:mercedes,fuso,scania',
-            'seat' => 'min:1|integer',
-            'price_per_day' => 'integer|min:100000'
+            'name' => 'string|min:3',
+            'age' => 'integer|min:18',
+            'id_number' => 'string|digits:16'
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
 
-        $bus = Bus::where('id', $id);
-        if(!empty($bus)){
-            $bus->update($request->all());
+        $driver = Driver::where('id', $id)->first();
+
+        if(!empty($driver)){
+            $driver->update($request->all());
 
             return response()->json([
                 'status' => true,
-                'message' => 'Update Bus Succesfuly',
-                'data' => $bus
-            ],200);
+                'message' => 'Update Driver Succes'
+            ], 200);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Bus With Current id Not Found'
-        ],402);
+            'message' => 'Driver with current id not found'
+        ],400);
     }
 
     /**
@@ -130,20 +131,20 @@ class BusController extends Controller
      */
     public function destroy($id)
     {
-        $bus = Bus::where('id', $id)->first();
+        $driver = Driver::where('id', $id)->first();
 
-        if(!empty($bus)){
-            $bus->delete();
+        if(!empty($driver)){
+            $driver->delete();
 
             return response()->json([
                 'status' => true,
-                'message' => 'Delete Bus Succes'
-            ],200);
+                'message' => 'Update Driver Succes'
+            ], 200);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Bus With Current id Not Found'
-        ],401);
+            'message' => 'Driver with current id not found'
+        ],400);
     }
 }

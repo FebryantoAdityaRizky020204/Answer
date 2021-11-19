@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BusController;
+use App\Http\Controllers\DriverController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::middleware('auth:api')->group(function() { 
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::apiResource('/bus', BusController::class);
+        Route::apiResource('/buses', BusController::class);
+        Route::apiResource('/drivers', DriverController::class);
     });
 });
