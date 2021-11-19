@@ -53,6 +53,10 @@ class AuthController extends Controller
 
         if(Auth::attempt($request->all())){
             $token = Auth::user()->api_token;
+            if(empty($token)){
+                $user = User::where('password', Auth::user()->password)->first();
+                $user->update(['api_token' => bcrypt(Auth::user()->id)]);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Loged In Succesfuly',
@@ -64,5 +68,20 @@ class AuthController extends Controller
             'status' => false,
             'message' => 'invalid login'
         ],401);
+    }
+
+    public function logout(Request $request){
+        $token = explode(' ',$request->header('Authorization'));
+        $user = User::where('api_token', $token[1])->first();
+
+        $user->update([
+            'api_token' => NULL
+        ]);
+
+        return response()->json([
+            'succes' => true,
+            'message' => 'logout success'
+        ], 200);
+
     }
 }
