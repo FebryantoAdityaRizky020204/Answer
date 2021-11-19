@@ -56,6 +56,7 @@ class AuthController extends Controller
             if(empty($token)){
                 $user = User::where('password', Auth::user()->password)->first();
                 $user->update(['api_token' => bcrypt(Auth::user()->id)]);
+                $token = Auth::user()->api_token;
             }
             return response()->json([
                 'status' => true,
