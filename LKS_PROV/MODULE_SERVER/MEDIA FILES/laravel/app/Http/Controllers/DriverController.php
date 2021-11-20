@@ -18,7 +18,6 @@ class DriverController extends Controller
         $drivers = Driver::get();
 
         if(!empty($drivers)){
-
             return response()->json([
                 'status' => true,
                 'message' => 'All Data Drivers Table',
@@ -58,8 +57,6 @@ class DriverController extends Controller
                 'data' => $driver
             ],200);
         }
-
-
     }
 
     /**
@@ -71,7 +68,6 @@ class DriverController extends Controller
     public function show($id)
     {
         $driver = Driver::where('id', $id)->first();
-
         if(!empty($driver)){
 
             return response()->json([

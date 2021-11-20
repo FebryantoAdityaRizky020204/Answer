@@ -38,7 +38,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'contact_name' => 'string|required',
             'contact_phone' => 'string|required',
@@ -99,8 +98,6 @@ class OrderController extends Controller
                 ],
             ],200);
         }
-
-        return response()->json();
     }
 
     /**
@@ -161,35 +158,5 @@ class OrderController extends Controller
             'status' => false,
             'message' => 'data with current id not found'
         ],402);
-    }
-
-
-    /**
-     * 
-     * For admin to create new order. For each order, match available bus with available driver in the given date. Make sure that there is no conflicting order (one bus in 2 different dates). For example, if bus A and driver D is rented from 1 January 2018 for 5 days, both bus A and driver D cannot be ordered anymore until 5 January 2018 because it already rented from 1 January until 5 January
-     */
-
-    public function test(Request $request){
-
-        $date = $request->date_try;
-        $customDate = '';
-
-        // first validation
-        $validator = Validator::make($request->all(), [
-            'date_try' => 'required|date'
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors(),422);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'its already run as well',
-            'data' => [
-                'your_request' => $request->all(),
-                'custom_date' => $customDate,
-            ],
-        ], 200);
     }
 }

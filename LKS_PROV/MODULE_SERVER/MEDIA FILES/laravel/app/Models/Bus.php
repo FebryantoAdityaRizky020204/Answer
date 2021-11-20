@@ -12,7 +12,6 @@ class Bus extends Model
 
     protected $guarded = ['id'];
 
-
     public function order(){
         return $this->hasMany(Order::class);
     }

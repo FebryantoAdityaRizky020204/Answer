@@ -50,7 +50,6 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-
         if(Auth::attempt($request->all())){
             $token = Auth::user()->api_token;
             if(empty($token)){
@@ -83,6 +82,5 @@ class AuthController extends Controller
             'succes' => true,
             'message' => 'logout success'
         ], 200);
-
     }
 }

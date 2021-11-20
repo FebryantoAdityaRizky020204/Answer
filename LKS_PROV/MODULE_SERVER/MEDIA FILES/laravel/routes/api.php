@@ -19,19 +19,13 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('v1')->group(function () {
-    Route::get('/users-list', [AuthController::class, 'getUsersList']); // it's to testing
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::middleware('auth:api')->group(function() { 
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::apiResource('/buses', BusController::class);
         Route::apiResource('/drivers', DriverController::class);
-        Route::match(['get', 'post'], '/orders/test', [OrderController::class, 'test']);
         Route::apiResource('/orders', OrderController::class);
     });
 });
