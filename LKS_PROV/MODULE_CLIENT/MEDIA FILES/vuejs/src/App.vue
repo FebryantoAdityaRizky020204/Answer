@@ -1,9 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav class="navbar navbar-expand navbar-dark bg-primary md-5 px-3">
+      <a class="navbar-brand" href="#">BAMRI</a>
+
+      <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="bus.html">Bus</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="driver.html">Driver</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="order.html">Order</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
     <router-view/>
   </div>
 </template>
