@@ -17,7 +17,7 @@ class DriverController extends Controller
     {
         $drivers = Driver::get();
 
-        if(!empty($driver)){
+        if(!empty($drivers)){
 
             return response()->json([
                 'status' => true,
@@ -44,7 +44,7 @@ class DriverController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'string|required|min:3',
             'age' => 'integer|min:18|required',
-            'id_number' => 'string|required|digits:16'
+            'id_number' => 'string|required|min:16|max:16|unique:drivers'
         ]);
 
         if($validator->fails()){
