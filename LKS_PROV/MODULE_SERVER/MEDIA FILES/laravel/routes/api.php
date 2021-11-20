@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -30,5 +31,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::apiResource('/buses', BusController::class);
         Route::apiResource('/drivers', DriverController::class);
+        Route::match(['get', 'post'], '/orders/test', [OrderController::class, 'test']);
+        Route::apiResource('/orders', OrderController::class);
     });
 });
