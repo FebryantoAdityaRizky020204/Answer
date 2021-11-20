@@ -1,25 +1,55 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-primary md-5 px-3">
-      <a class="navbar-brand" href="#">BAMRI</a>
+    <nav class="navbar navbar-expand justify-content-between navbar-dark bg-primary md-5 px-3">
+      <router-link class="navbar-brand" to="/">BAMRI</router-link>
 
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" v-if="loggedIn">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                  <a class="nav-link" href="bus.html">Bus</a>
+                  <router-link to="/bus" class="nav-link">Bus</router-link>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="driver.html">Driver</a>
+                  <router-link to="/driver" class="nav-link">Driver</router-link>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="order.html">Order</a>
+                  <router-link to="/order" class="nav-link">Order</router-link>
               </li>
           </ul>
+      </div>
+
+      <div class="d-flex right">
+        <div class="nav-item btn btn-danger mx-3" v-if="loggedIn">Logout</div>
+        <router-link to="/auth/login" class="nav-item btn btn-primary" v-if="!loggedIn">Login</router-link>
       </div>
   </nav>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+    data(){
+        return{
+            loggedIn: false
+        }
+    },
+
+    methods: {
+        getLoggedIn(){
+            this.loggedIn = localStorage.getItem("loggedIn");
+        }
+    },
+
+    watch:{
+        $route: {
+            immediate: true,
+            handler(){
+                this.getLoggedIn()
+            }
+        }
+    }
+}
+</script>
 
 <style>
 #app {
