@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isNull;
+
 class AuthController extends Controller
 {
     public function getUsersList(){
@@ -52,15 +54,17 @@ class AuthController extends Controller
 
         if(Auth::attempt($request->all())){
             $token = Auth::user()->api_token;
-            if(empty($token)){
+            if(isNull($token)){
                 $user = User::where('password', Auth::user()->password)->first();
                 $user->update(['api_token' => bcrypt(Auth::user()->id)]);
-                $token = Auth::user()->api_token;
             }
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Loged In Succesfuly',
-                'token' => $token
+                'token' => Auth::user()->api_token,
+                'user' => Auth::user(),
+                'user_id' => Auth::user()->id
             ],200);
         }
 
