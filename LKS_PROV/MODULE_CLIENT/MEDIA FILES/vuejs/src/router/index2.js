@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 // bus
@@ -12,6 +13,8 @@ import Order from './../views/order/Order.vue'
 import CreateOrder from './../views/order/CreateOrder.vue'
 // login
 import Login from './../views/auth/Login.vue'
+
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -56,8 +59,9 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
 

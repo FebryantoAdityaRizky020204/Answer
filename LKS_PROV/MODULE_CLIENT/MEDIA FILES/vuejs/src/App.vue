@@ -1,9 +1,8 @@
 <template>
-  <div id="app">
-    <nav class="navbar navbar-expand justify-content-between navbar-dark bg-primary md-5 px-3">
+  <nav class="navbar navbar-expand justify-content-between navbar-dark bg-primary md-5 px-3">
       <router-link class="navbar-brand" to="/">BAMRI</router-link>
 
-      <div class="collapse navbar-collapse" v-if="loggedIn">
+      <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item">
                   <router-link to="/bus" class="nav-link">Bus</router-link>
@@ -18,38 +17,18 @@
       </div>
 
       <div class="d-flex right">
-        <div class="nav-item btn btn-danger mx-3" v-if="loggedIn">Logout</div>
-        <router-link to="/auth/login" class="nav-item btn btn-primary" v-if="!loggedIn">Login</router-link>
+        <div class="nav-item btn btn-danger mx-3">Logout</div>
+        <router-link to="/auth/login" class="nav-item btn btn-primary">Login</router-link>
       </div>
   </nav>
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            loggedIn: false
-        }
-    },
-
-    methods: {
-        getLoggedIn(){
-            this.loggedIn = localStorage.getItem("loggedIn");
-        }
-    },
-
-    watch:{
-        $route: {
-            immediate: true,
-            handler(){
-                this.getLoggedIn()
-            }
-        }
-    }
 }
 </script>
+
 
 <style>
 #app {
