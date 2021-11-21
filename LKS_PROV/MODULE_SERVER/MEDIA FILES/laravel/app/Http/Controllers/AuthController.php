@@ -56,13 +56,14 @@ class AuthController extends Controller
             $token = Auth::user()->api_token;
             if(isNull($token)){
                 $user = User::where('password', Auth::user()->password)->first();
-                $user->update(['api_token' => bcrypt(Auth::user()->id)]);
+                $token = bcrypt(Auth::user()->id);
+                $user->update(['api_token' => $token]);
             }
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Loged In Succesfuly',
-                'token' => Auth::user()->api_token,
+                'token' => $token,
                 'user' => Auth::user(),
                 'user_id' => Auth::user()->id
             ],200);
